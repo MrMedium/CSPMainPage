@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>Welcome to - CSP</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
         }
 
         #logo {
-            max-width: 100%;
+            max-width: 200px; /* Adjust the size as needed */
             height: auto;
         }
 
@@ -25,22 +25,41 @@
 
         .button {
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #888; /* Grey color */
             color: #fff;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
             margin-right: 10px;
+            text-decoration: none; /* Remove underline */
+            display: inline-block;
         }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        body {
+    background-color: #f4f1f1;
+}
     </style>
 </head>
 <body>
-    <img id="logo" src="GSlogo.jpg" alt="Your Logo">
+    <img id="logo" src="logo.png" alt="Your Logo">
 
     <div class="button-container">
         <a href="page1.html" class="button">Button 1</a>
         <a href="page2.html" class="button">Button 2</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2023 CSP- LOGISTICS | Version 1.0 ALPHA</p>
     </div>
 </body>
 </html>
