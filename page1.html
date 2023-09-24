@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - MAIN PAGE</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        #top-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #time {
+            font-size: 18px;
+            margin-right: 20px;
+        }
+
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .button {
+            background-color: #888;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        .top-button,
+        .bottom-button {
+            background-color: #888;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        #bottom-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #secure-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="top-bar">
+        <h1>Welcome - Your Currently Secured Into Our Network</h1>
+        <span id="time"></span>
+    </div>
+
+    <div id="button-container">
+        <!-- Top Row -->
+        <a href="page1.html" class="top-button">Button 1</a>
+        <!-- <a href="page2.html" class="top-button">Button 2</a> -->
+        <!-- <a href="page3.html" class="top-button">Button 3</a> -->
+        <!-- Middle Row -->
+        <a href="page4.html" class="button">Button 2</a>
+        <a href="page4.html" class="button">Button 3</a>
+        <a href="page4.html" class="button">Button 4</a>
+        <a href="page5.html" class="button">Button 5</a>
+        <a href="page6.html" class="button">Button 6</a>
+        <!-- Bottom Row -->
+        <!-- <a href="page7.html" class="bottom-button">Button 7</a> -->
+        <!-- <a href="page8.html" class="bottom-button">Button 8</a> -->
+        <!-- <a href="page9.html" class="bottom-button">Button 9</a> -->
+    </div>
+
+    <div id="bottom-bar">
+        <i id="secure-icon" class="fas fa-lock"></i> <!-- Secure icon -->
+        Secure Data | IP Address: <span id="user-ip">Loading...</span> | Geolocation: <span id="geolocation">Loading...</span>
+    </div>
+
+    <script>
+        // Function to update the time in the top bar
+        function updateTime() {
+            const now = new Date();
+            const timeElement = document.getElementById("time");
+            const formattedTime = now.toLocaleTimeString();
+            timeElement.textContent = formattedTime;
+        }
+
+        // Update the time every second
+        setInterval(updateTime, 1000);
+
+        // Get user's geolocation
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const geolocationElement = document.getElementById("geolocation");
+                geolocationElement.textContent = `Lat: ${latitude.toFixed(2)}, Long: ${longitude.toFixed(2)}`;
+            }, function(error) {
+                const geolocationElement = document.getElementById("geolocation");
+                geolocationElement.textContent = "Unable to fetch geolocation.";
+            });
+        } else {
+            const geolocationElement = document.getElementById("geolocation");
+            geolocationElement.textContent = "Geolocation not supported.";
+        }
+
+        // Simulated user IP address (replace with actual server-side code)
+        const userIpAddress = "127.0.0.1";
+        // Update the user's IP address in the bottom bar
+        document.getElementById("user-ip").textContent = userIpAddress;
+
+        // Initial time update
+        updateTime();
+    </script>
+</body>
+</html>
