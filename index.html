@@ -26,7 +26,7 @@
 
         .button {
             padding: 10px 20px;
-            background-color: #889; /* Grey color */
+            background-color: #888; /* Grey color */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -35,6 +35,47 @@
             margin-right: 10px;
             text-decoration: none; /* Remove underline */
             display: inline-block;
+        }
+
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        #slideshow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .fact {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fade 4.5s ease-in-out infinite alternate;
+            animation: fade 2.5s ease-in-out infinite alternate;
+        }
+
+        .fact.active {
+            display: flex;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         .footer {
@@ -49,31 +90,39 @@
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <div id="slideshow-container">
+            <div class="fact active"><b>Programmed And Tested By Harry</b></div>
+            <div class="fact"><b>Secured By OctoHIDE</b></div>
+            <div class="fact"><b>This Website IS Under Development At This Stage</b></div>
+            <!-- Add more facts here -->
+        </div>
+    </div>
+
     <img id="logo" src="GSlogo.jpg" alt="Your Logo">
 
     <div class="button-container">
-        <a href="#" class="button">Help Page...</a>
-        <a href="https://mrmedium.github.io/CPSQXPage/" class="button">Main Page</a>
+        <a href="page2.html" class="button">Help and Code Index...</a>
+        <a href="page1.html" class="button">Main Page & More...</a>
     </div>
 
     <div class="footer">
-        <p>&copy; 2023 CSP- LOGISTICS | Version 1.0 ALPHA</p>
+        <p><B>&copy; 2023 CSP- LOGISTICS | Version 1.0 ALPHA</B></p>
     </div>
-</body>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Consent</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="cookie-consent" class="popup">
-        <div class="popup-content">
-            <p>This website uses cookies to ensure you get the best experience on our website.</p>
-            <p>By using our website, you agree to our <a href="Terms and Conditions for CSP Coding.pdf">Terms and Conditions</a>.</p>
-            <button id="accept-cookies">Accept</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
+
+    <script>
+        function rotateFacts() {
+            const facts = document.querySelectorAll(".fact");
+            let currentIndex = 0;
+
+            setInterval(() => {
+                facts[currentIndex].classList.remove("active");
+                currentIndex = (currentIndex + 1) % facts.length;
+                facts[currentIndex].classList.add("active");
+            }, 2500);
+        }
+
+        rotateFacts();
+    </script>
 </body>
 </html>
