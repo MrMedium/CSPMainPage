@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
+    <title>Sparx Bookmark Check DATA</title>
+    <style>
+        /* Some basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 0px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button.download {
+            background-color: #28a745;
+        }
+        button.download:hover {
+            background-color: #1e7e34;
+        }
+        #tableContainer {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        span#currentSection {
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Sparx BookWork Code Helper</h1>
+        <p>Enter text in the box below and click "Submit" or press Enter to save it, once your done click download pdf so you can recall it later:
+        </p>
+        <form id="textForm">
+            <input type="text" id="textInput" placeholder="Enter your text here" required>
+            <br><br>
+            <button type="button" onclick="saveText()">Submit</button>
+        </form>
+        <div id="tableContainer">
+            <!-- Saved text will appear in a table here -->
+        </div>
+        <button type="button" onclick="nextSection()">Next Section</button>
+        <button type="button" onclick="backSection()">Back Section</button>
+        <button type="button" class="download" onclick="downloadPDF()">Download PDF - For Later</button>
+        <p></p>
+        <span id="currentSection">Current Section: 1A</span>
+    </div>
+
+    <script>
+        var sectionCounter = 1; // Initialize section counter
+        var currentNumber = 1; // Initialize current number
+        var tableData = []; // Store table data for PDF generation
+
+        // JavaScript function to save the submitted text into a table
+        function saveText() {
+            // Get the text entered by the user
+            var text = document.getElementById("textInput").value;
+
+            // Create a new table row
+            var tableRow = {
+                Section: currentNumber + String.fromCharCode(64 + sectionCounter),
+                Text: text,
+            };
+
+            // Add the row to the data
+            tableData.push(tableRow);
+
+            // Create a new table row element for the displayed table
+            var newRow = document.createElement("tr");
+
+            // Create a table cell for the section label
+            var sectionCell = document.createElement("td");
+            sectionCell.textContent = tableRow.Section;
+            newRow.appendChild(sectionCell);
+
+            // Create a table cell for the saved text
+            var textCell = document.createElement("td");
+            textCell.textContent = tableRow.Text;
+            newRow.appendChild(textCell);
+
+            // Append the row to the displayed table
+            document.getElementById("tableBody").appendChild(newRow);
+
+            // Clear the input field after saving
+            document.getElementById("textInput").value = "";
+
+            // Increment the section counter for the current section
+            sectionCounter++;
+        }
+
+        // JavaScript function to switch to the next section
+        function nextSection() {
+            // Reset the section counter to 1 when switching sections
+            sectionCounter = 1;
+
+            // Increment the current number
+            currentNumber++;
+
+            // Update the displayed current section
+            document.getElementById("currentSection").textContent = "Current Section: " + currentNumber + String.fromCharCode(64 + sectionCounter);
+        }
+
+        // JavaScript function to switch to the previous section
+        function backSection() {
+            // Reset the section counter to 1 when switching sections
+            sectionCounter = 1;
+
+            // Decrement the current number
+            currentNumber--;
+
+            // Update the displayed current section
+            document.getElementById("currentSection").textContent = "Current Section: " + currentNumber + String.fromCharCode(64 + sectionCounter);
+        }
+
+        // JavaScript function to download the table as a PDF
+        function downloadPDF() {
+            // Define the PDF document definition
+            var docDefinition = {
+                content: [
+                    { text: 'Sparx Bookwork Code - TABLE', style: 'header' },
+                    {  },
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', '*'],
+                            body: [['Section', 'Text']].concat(tableData.map(row => [row.Section, row.Text]))
+                        }
+                    }
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        margin: [0, 0, 0, 10]
+                    },
+                    subheader: {
+                        fontSize: 14,
+                        bold: true,
+                        margin: [0, 10, 0, 5]
+                    }
+                }
+            };
+
+            // Generate and download the PDF
+            pdfMake.createPdf(docDefinition).download('SPARX_SUBMISSIONSPAGEBGKJUY.pdf');
+        }
+
+        // Prevent form submission and page reload on Enter key press
+        document.getElementById("textForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            saveText();
+        });
+
+        // Handle Enter key press inside the input field
+        document.getElementById("textInput").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                saveText(); // Call the saveText function
+            }
+        });
+    </script>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Section</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Saved text will appear in table rows here -->
+        </tbody>
+    </table>
+</body>
+</html>
